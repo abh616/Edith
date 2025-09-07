@@ -1,0 +1,17 @@
+# Ignore Python cache & environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# Ignore virtual env & site packages
+env/
+venv/
+Lib/
+Scripts/
+
+# Ignore system files
+.DS_Store
+Thumbs.db

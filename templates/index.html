@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Voice Assistant</title>
+  <style>
+    body { text-align: center; font-family: Arial; margin-top: 80px; }
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover { background: #45a049; }
+    #output { margin-top: 20px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>🎤 Voice Based Assistant</h1>
+  <button id="micButton">Start Listening</button>
+  <div id="output"></div>
+
+  <script>
+    const button = document.getElementById("micButton");
+    const output = document.getElementById("output");
+    let listening = false;
+
+    button.addEventListener("click", () => {
+      if (!listening) {
+        listening = true;
+        button.innerText = "Stop Listening";
+
+        fetch("/listen")
+          .then(res => res.json())
+          .then(data => {
+            if (data.error) {
+              output.innerText = "Error: " + data.error;
+            } else {
+              output.innerHTML =
+                "<b>You:</b> " + data.command +
+                "<br><b>Intent:</b> " + data.intent +
+                "<br><b>Edith:</b> " + data.response;
+            }
+            button.innerText = "Start Listening";
+            listening = false;
+          });
+      }
+    });
+  </script>
+</body>
+</html>
